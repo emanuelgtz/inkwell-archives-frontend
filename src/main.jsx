@@ -1,10 +1,16 @@
-
 import { createRoot } from 'react-dom/client'
-import SignUp from './pages/SignUp'
 import './index.css'
-import Login from './pages/Login'
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import Home from './pages/Home';
+
+
 
 createRoot(document.getElementById('root')).render(
-  <Login />
-  // <SignUp />
+  <BrowserRouter>
+    {/* <App />  */}
+    <Home />
+  </ BrowserRouter>
 )
