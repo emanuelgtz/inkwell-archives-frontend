@@ -1,9 +1,12 @@
-
 import validationLogin from "../utils/validationLogin"
 import { useForm } from "../hooks/useForm";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 function Login() {
+
+  const { loginStatus, setLoginStatus } = useContext(Context);
 
   const {
     formState,
@@ -24,20 +27,50 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const handleHomePage = () => {
+    navigate("/login/home")
+  }
+
   const handleSignUp = () => {
     navigate("/sign-up")
   }
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch('http://localhost:8080/auth/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState)
+      });
+
+      if (!res.ok) {
+        setNotValid(true);
+        throw new Error('Something went wrong with the fetch')
+      }
+
+      setResponse(await res.json());
+      localStorage.setItem('userEmail', formState.userEmail);
+      setLoginStatus(res.ok);
+      console.log(res);
+
+      handleHomePage();
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
+
   return (
-    <div className="h-screen dark:bg-gray-800  border-purple-600 p-2">
+    <div className="h-screen dark:bg-gray-800 border-purple-600">
 
       <div className="h-full w-full p-2  border-green-600 content-center
         bg-slate-200 
-        dark:bg-slate-700 rounded-lg">
+        dark:bg-slate-700">
 
         <form onSubmit={onSubmit} action="/submit-login" method="POST"
           className=""
@@ -45,14 +78,18 @@ function Login() {
 
           <h1 className="dark:text-white text-3xl antialiased font-light text-center">
             Login
-
           </h1>
 
           <label htmlFor="user-email"
             className="block mb-2 text-sm font-light text-gray-900 dark:text-white mt-3">
-            Email {error.userEmail ?
-              <span className="p-1 text-sm font-medium dark:font-bold antialiased dark:antialiased ml-5">{"*" + error.userEmail + "*"}</span>
-              : null}
+            Email
+            {
+              error.userEmail ?
+                <span className="p-1 text-sm font-medium dark:font-bold antialiased dark:antialiased ml-5">
+                  {"*" + error.userEmail + "*"}
+                </span>
+                : null
+            }
           </label>
           <input type="email" id="user-email"
             className="bg-gray-50 shadow-md 
@@ -70,6 +107,7 @@ function Login() {
               <span className="p-1 text-sm font-medium dark:font-bold antialiased dark:antialiased ml-1">{"*" + error.userPassword + "*"}</span>
               : null}
           </label>
+          
           <input type="password"
             id="user-password"
             className="bg-gray-50 shadow-md
@@ -95,7 +133,7 @@ function Login() {
 
             {/* Login page */}
             <a
-              className="dark:text-white  text-center text-base dark:font-medium " 
+              className="dark:text-white  text-center text-base dark:font-medium "
               onClick={handleSignUp}>
               <u>I don't have an account</u>
             </a>

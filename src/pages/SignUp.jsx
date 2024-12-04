@@ -20,7 +20,12 @@ function SignUp() {
     userAge: '',
     userCountry: '',
     userCity: '',
-    userAddress: ''
+    userAddress: '',
+    role: [
+      {
+        roleName: 'ADMIN'
+      }
+    ]
   }, validationSignUp);
 
   const {
@@ -30,7 +35,8 @@ function SignUp() {
     userAge,
     userCountry,
     userCity,
-    userAddress
+    userAddress,
+    role
   } = formState;
 
   const navigate = useNavigate();
@@ -42,17 +48,40 @@ function SignUp() {
   // To handle the submit 
   const onSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const response = await fetch('http://localhost:8080/auth/signup', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      if(!response.ok) {
+        setNotValid(true);
+        throw new Error('Response is not working');
+      }
+
+      setResponse(await response.json());
+
+      console.log(formState)
+
+      onResetForm();
+
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   return (
     <div className="h-screen  border-red-500 overflow-auto
-    bg-slate-50 dark:bg-gray-800 p-2">
+    bg-slate-50 dark:bg-gray-800 ">
 
       {/* Form  */}
       <div className="w-full p-2  rounded-xl content-center 
         bg-slate-200 dark:bg-slate-700">
 
-        <form onSubmit={onSubmit} action="/register" method="POST" className="">
+        <form onSubmit={onSubmit} action="/sign-up" method="POST" className="">
           <h1 className="dark:text-white text-3xl antialiased font-light text-center">
             Sign Up
           </h1>
@@ -95,7 +124,9 @@ function SignUp() {
           <label htmlFor="user-country"
             className="block mb-2 text-sm font-light text-gray-900 dark:text-white mt-3">
             Country {error.userCountry ?
-              <span className="p-1 text-sm font-normal dark:font-bold antialiased dark:antialiased ml-10">{"**" + error.userCountry + "**"}</span>
+              <span className="p-1 text-sm font-normal dark:font-bold antialiased dark:antialiased ml-10">
+                {"**" + error.userCountry + "**"}
+              </span>
               : null}
           </label>
           <input type="text" id="user-country"

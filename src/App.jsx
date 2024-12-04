@@ -7,15 +7,18 @@ import Home from "./pages/Home";
 import UserInfo from "./components/UserInfo";
 import Cart from "./components/Cart";
 import PurchaseHistory from "./components/PurchaseHistory";
+import BookInfo from "./components/BookInfo";
+
 
 function App() {
-  
+
   return (
     <WebContextProvider>
       <Routes>
         {/* Private routes */}
         <Route element={ <PrivateRoutes />}>
           <Route path="/login/home" exact element={<Home />} />
+          <Route path="/login/book-info" exact element={<BookInfo />} />
           <Route path="/login/user-info" exact element={<UserInfo />} />
           <Route path="/login/cart" exact element={<Cart />} />
           <Route path="/login/purchase-history" exact element={<PurchaseHistory />} />

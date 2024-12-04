@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { WebContext } from "./Context";
+import { Context } from "./Context";
 
-function WebContextProvider({ children }) {
+
+function ContextProvider({ children }) {
   // Item written in the search bar 
   const [itemSearchBar, setItemSearchBar] = useState(null);
   // Item passed into the cart to be purchased later. 
@@ -11,19 +12,21 @@ function WebContextProvider({ children }) {
   // The status of the login
   const [loginStatus, setLoginStatus] = useState();
 
-  const valueObj = {
-    itemSearchBar, setItemSearchBar, 
-    cartItem, setCartItem, 
-    user, setUser, 
-    loginStatus, setLoginStatus
-  };
+  // The book passed into BookInfo component
+  const [bookInfo, setBookInfo] = useState();
 
-  return (
-    <WebContext.Provider value={valueObj}>
+  return(
+    <Context.Provider value={
+      {
+        itemSearchBar, setItemSearchBar, cartItem, setCartItem, 
+        user, setUser, loginStatus, setLoginStatus, bookInfo, setBookInfo
+      }
+    }>
       {children}
-    </WebContext.Provider>
+
+    </Context.Provider>
   )
 
 }
 
-export default WebContextProvider;
+export default ContextProvider;
