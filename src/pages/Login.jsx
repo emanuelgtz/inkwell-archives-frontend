@@ -124,7 +124,7 @@ function Login() {
           <div className="flex flex-col justify-around mt-10">
             <button type="submit" value="Submit"
               className="
-              bg-indigo-500 
+              bg-blue-500 
                 hover:bg-green-500 dark:bg-blue-600 dark:hover:bg-green-600
                 dark:text-white
               text-white text-base font-medium p-3 px-7 rounded-2xl mb-10" onClick={onCheck} >

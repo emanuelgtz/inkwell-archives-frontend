@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />   
+    <App /> 
+    {/* <Cart /> */}
   </ BrowserRouter>
 )
