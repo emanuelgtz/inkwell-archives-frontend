@@ -26,9 +26,9 @@ export default function MenuBar() {
       <div className="">
         <img src={userIcon} alt="" className="w-8" />
       </div>
-      <div className="flex items-center border-2" onClick={handleCartClick}>
+      <div className="flex items-center" onClick={handleCartClick}>
         <img src={cartIcon} alt="cart-icon" className="w-7" />
-        <p className="text-lg font-normal text-white ml-1">null</p>
+        <p className="text-lg font-normal text-white ml-1"></p>
       </div>
     </footer>
 

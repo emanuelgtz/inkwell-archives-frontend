@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export const useForm = (initialForm = {}, validateForm) => {
+export const useForm = (initialForm = {}, validation) => {
 
   const [formState, setFormState] = useState(initialForm);
   const [error, setError] = useState({});
@@ -9,12 +9,12 @@ export const useForm = (initialForm = {}, validateForm) => {
 
   const onResetForm = () => {
     setFormState(initialForm)
-    console.log("Reset button called")
+    console.log("Reset button has been called")
   }
   
   const onInputChange = ({target}) => {
     const {name, value} = target;
-    console.log(target.value)
+
     setFormState({
       ...formState, 
       [name]: value
@@ -22,16 +22,15 @@ export const useForm = (initialForm = {}, validateForm) => {
   }
 
   const onCheck = () => {
-    setError(validateForm(formState))
+    setError(validation(formState))
   }
 
   return {
     ...formState, 
     formState, 
+    onCheck,
     onInputChange, 
     onResetForm, 
-    // onInputBlur, 
-    onCheck,
     setNotValid, 
     setResponse, 
     error, 

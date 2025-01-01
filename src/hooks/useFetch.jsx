@@ -3,8 +3,8 @@ import { data } from "react-router-dom"
 
 export const useFetch = (url) => {
 
-  const [items, setItems] = useState([])
-
+  const [items, setItems] = useState([]);
+  
   const fetchItems = async () => {
 
     try {
