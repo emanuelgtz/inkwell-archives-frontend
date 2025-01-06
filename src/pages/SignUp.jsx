@@ -58,7 +58,6 @@ function SignUp() {
     }
 
     try {
-
       const response = await fetch(
         'http://localhost:8080/auth/signup', {
         method: 'POST',
@@ -75,7 +74,6 @@ function SignUp() {
 
       setResponse(await response.json());
       onResetForm();
-      console.log(formState)
 
     } catch (error) {
       console.log(error)
@@ -88,7 +86,7 @@ function SignUp() {
     bg-slate-50 dark:bg-gray-800 ">
 
       {/* Form  */}
-      <div className="w-full p-2  rounded-xl content-center 
+      <div className="w-full p-2   content-center 
         bg-slate-200 dark:bg-slate-700">
 
         <form onSubmit={onSubmit} action="/sign-up" method="POST" className="">
@@ -153,10 +151,14 @@ function SignUp() {
 
           <input type="text" id="user-country"
             className="bg-gray-50 shadow-md
-          border-gray-300 text-gray-900 text-sm rounded-3xl 
-          focus:ring-blue-500  block w-full p-3.5  dark:shadow-gray-900 dark:shadow-inner
-          dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400
-          dark:text-white dark:focus:ring-blue-500 outline-none"
+          border-gray-300 text-gray-900 text-sm 
+          rounded-3xl 
+          focus:ring-blue-500  block w-full p-3.5  
+          dark:shadow-gray-900 dark:shadow-inner
+          dark:bg-slate-700 dark:border-gray-600 
+          dark:placeholder-gray-400
+          dark:text-white dark:focus:ring-blue-500 
+          outline-none"
             name="userCountry" value={userCountry} onChange={onInputChange}
             autoCapitalize="off"
             placeholder="your country" />
@@ -174,14 +176,18 @@ function SignUp() {
 
           <input type="text" id=""
             className="bg-gray-50 shadow-md
-          border-gray-300 text-gray-900 text-sm rounded-3xl 
-          focus:ring-blue-500  block w-full p-3.5  dark:shadow-gray-900 dark:shadow-inner
-          dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400
-          dark:text-white dark:focus:ring-blue-500 outline-none"
+          border-gray-300 text-gray-900 text-sm 
+          rounded-3xl 
+          focus:ring-blue-500  block w-full p-3.5  
+          dark:shadow-gray-900 
+          dark:shadow-inner
+          dark:bg-slate-700 dark:border-gray-600 
+          dark:placeholder-gray-400
+          dark:text-white dark:focus:ring-blue-500 
+          outline-none"
             name="userCity" value={userCity} onChange={onInputChange}
             autoCapitalize="off"
             placeholder="your city" />
-
 
           <label htmlFor="user-address"
             className="block mb-2 text-sm font-light text-gray-900 dark:text-white mt-3">
@@ -221,7 +227,7 @@ function SignUp() {
           focus:ring-blue-500  block w-full p-3.5 dark:shadow-gray-900 dark:shadow-inner
           dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400
           dark:text-white dark:focus:ring-blue-500 outline-none"
-            name="userEmail" value={userEmail}  onChange={onInputChange}
+            name="userEmail" value={userEmail} onChange={onInputChange}
             autoComplete="off"
             placeholder="email@example.com" />
 
@@ -253,23 +259,23 @@ function SignUp() {
 
             <button type="reset" value="Reset" onClick={onResetForm}
               className="
-              bg-indigo-500 
+              bg-blue-500 
                 hover:bg-purple-500 dark:bg-blue-600 dark:hover:bg-purple-500
                 dark:text-white
               text-white text-base font-medium p-3 px-7 rounded-2xl mb-5">Reset</button>
 
             <button type="submit" value="Submit" onClick={onCheck}
               className="
-              bg-indigo-500 
-                hover:bg-green-500 dark:bg-blue-600 dark:hover:bg-green-600
-                dark:text-white
+              bg-blue-500 hover:bg-green-500 dark:bg-blue-600 
+              dark:hover:bg-green-600
+              dark:text-white
               text-white text-base font-medium p-3 px-7 rounded-2xl mb-5">
               Submit
             </button>
 
             {/* Login page */}
             <a
-              className="dark:text-white  text-center text-base dark:font-medium mt-5"
+              className="dark:text-white font-light text-center text-base dark:font-medium mt-5"
               onClick={handleLogin}>
               <u>I already have an account</u>
             </a>

@@ -10,9 +10,11 @@ function ContextProvider({ children }) {
   // The book passed into BookInfo component
   const [book, setBook] = useState();
   // Set the item in the Cart 
-  const [bookCart, setBookCart] = useState();
+  const [cart, setCart] = useState([]);
   
   const [loggedUserId, setLoggedUserId] = useState();
+
+  const [userInfo, setUserInfo] = useState();
 
   return(
     <Context.Provider value={
@@ -21,7 +23,9 @@ function ContextProvider({ children }) {
         loginStatus, setLoginStatus, 
         loggedUserId, setLoggedUserId,
         book, setBook,
-        bookCart, setBookCart
+        cart, setCart,
+        userInfo, setUserInfo 
+        
       }
     }>
       {children}

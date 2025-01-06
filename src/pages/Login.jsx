@@ -6,7 +6,7 @@ import { Context } from "../context/Context";
 
 function Login() {
 
-  const { loginStatus, setLoginStatus } = useContext(Context);
+  const { setLoginStatus } = useContext(Context);
 
   const {
     formState,
@@ -60,8 +60,6 @@ function Login() {
       setResponse(await res.json());
       localStorage.setItem('userEmail', formState.userEmail);
       setLoginStatus(res.ok);
-      console.log(res);
-
       handleHomePage();
 
     } catch (error) {
@@ -80,12 +78,16 @@ function Login() {
 
         <form onSubmit={onSubmit} action="/submit-login" method="POST">
 
-          <h1 className="dark:text-white text-3xl antialiased font-light text-center">
+          <h1 className="dark:text-white 
+          text-3xl 
+          antialiased 
+          font-light text-center">
             Login
           </h1>
 
           <label htmlFor="user-email"
-            className="block mb-2 text-sm font-light text-gray-900 dark:text-white mt-3">
+            className="block mb-2 text-sm font-light text-gray-900 
+            dark:text-white mt-3">
             Email
             {
               error.userEmail ?
@@ -99,15 +101,18 @@ function Login() {
           <input type="email" id="user-email"
             className="bg-gray-50 shadow-md 
           border-gray-300 text-gray-900 text-sm rounded-3xl 
-          focus:ring-blue-500  block w-full p-3.5 dark:shadow-gray-900 dark:shadow-inner
-          dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400
+          focus:ring-blue-500  block w-full p-3.5 
+          dark:shadow-gray-900 dark:shadow-inner
+          dark:bg-slate-700 dark:border-gray-600 
+          dark:placeholder-gray-400
           dark:text-white dark:focus:ring-blue-500 outline-none"
             name="userEmail" value={userEmail} onChange={onInputChange}
             autoComplete="off"
             placeholder="email@example.com" />
 
           <label htmlFor="user-password"
-            className="block mb-2 text-sm font-light text-gray-900 dark:text-white mt-5">
+            className="block mb-2 text-sm font-light text-gray-900 
+          dark:text-white mt-5">
             Password {error.userPassword ?
               <span className="p-1 text-sm font-medium dark:font-bold antialiased dark:antialiased ml-1">{"*" + error.userPassword + "*"}</span>
               : null}
@@ -117,9 +122,12 @@ function Login() {
             id="user-password"
             className="bg-gray-50 shadow-md
           border-gray-300 text-gray-900 text-sm rounded-3xl 
-          focus:ring-blue-500  block w-full p-3.5 dark:shadow-gray-900 dark:shadow-inner
-          dark:bg-slate-700 dark:border-gray-600 dark:placeholder-gray-400
-          dark:text-white dark:focus:ring-blue-500 outline-none"
+          focus:ring-blue-500  block w-full p-3.5 
+          dark:shadow-gray-900 dark:shadow-inner
+          dark:bg-slate-700 dark:border-gray-600 
+          dark:placeholder-gray-400
+          dark:text-white dark:focus:ring-blue-500 
+          outline-none"
             name="userPassword"
             value={userPassword} /*onBlur={onInputBlur}*/
             onChange={onInputChange}
@@ -131,16 +139,21 @@ function Login() {
             <button type="submit" value="Submit"
               className="
               bg-blue-500 
-                hover:bg-green-500 dark:bg-blue-600 dark:hover:bg-green-600
-                dark:text-white
-              text-white text-base font-medium p-3 px-7 rounded-2xl mb-10"
+              hover:bg-green-500 dark:bg-blue-600 
+              dark:hover:bg-green-600
+              dark:text-white
+              text-white text-base font-medium p-3 px-7 
+              rounded-2xl mb-10"
               onClick={onCheck} >
               Login
             </button>
 
             {/* Login page */}
             <a
-              className="dark:text-white  text-center text-base dark:font-medium "
+              className="dark:text-white 
+              font-light 
+              text-center 
+              text-base dark:font-medium "
               onClick={handleSignUp}>
               <u>I don't have an account</u>
             </a>

@@ -8,8 +8,7 @@ export const useForm = (initialForm = {}, validation) => {
   const [response, setResponse] = useState(null);
 
   const onResetForm = () => {
-    setFormState(initialForm)
-    console.log("Reset button has been called")
+    setFormState(initialForm);
   }
   
   const onInputChange = ({target}) => {

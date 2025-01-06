@@ -17,7 +17,6 @@ export const useFetch = (url) => {
 
       const json = await resp.json();
       setItems(json);
-      console.log(json)
 
     } catch (error) {
       console.log("There was an error when fetching the data")
