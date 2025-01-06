@@ -8,19 +8,47 @@ import priceTag from "../assets/pricetag.png"
 import { useFetch } from "../hooks/useFetch";
 
 function Home() {
-  // for cart
-  const [counter, setCounter] = useState(1);
-  const { itemSearchBar } = useContext(Context)
-  const { setBook } = useContext(Context);
+
+  const {
+    setLoggedUserId,
+    setBook, itemSearchBar, setUserInfo
+  } = useContext(Context);
 
   const navigate = useNavigate();
+  const { items } = useFetch('http://localhost:8080/books');
+
+  let userEmail = localStorage.getItem('userEmail');
 
   const handleBookInfoClick = (book) => {
     setBook(book)
     navigate("/login/book-info")
-  }
+  };
 
-  const { items } = useFetch('http://localhost:8080/books');
+
+  // TODO: Refactor this by using useFetch
+  useEffect(() => {
+
+    const fetchUserId = async () => {
+      try {
+        const resp = await fetch(`http://localhost:8080/userinfo/${userEmail}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await resp.json();
+        setLoggedUserId(json.id);
+        setUserInfo(json)
+        
+
+      } catch (error) {
+        console.log("There was an error in fetching the id of the logged user")
+      }
+    }
+
+    fetchUserId();
+  }, [userEmail]);
+
 
   return (
     <div className="mb-12">
@@ -28,7 +56,7 @@ function Home() {
       {
         !itemSearchBar ?
           <div className="overflow-scroll">
-            
+
             <div className="">
               <p className="text-lg text-center font-normal">
                 Mystery
@@ -48,13 +76,13 @@ function Home() {
                       </p>
                     </div>
 
-                    <div className="flex flex-col justify-around items-center h-full rounded-xl" >
-                      <div className="flex justify-center w-3/5 rounded-xl  bg-green-300">
+                    <div className="flex flex-col justify-center gap-2 items-center h-full rounded-xl" >
+                      <div className="flex justify-center w-3/5 rounded-xl bg-green-300">
                         <img src={priceTag} alt="" className="w-6 h-6" />
                         <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
+                      <div className="bg-blue-500 hover:bg-blue-500 p-2 px-3 rounded-xl mb-2">
                         <p className="font-semibold text-normal text-center text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
                           More Information
@@ -75,9 +103,10 @@ function Home() {
             <div className="flex overflow-x-scroll justify-around m-1">
               {
                 items.filter((books) => books.bookCategory == "Historical Fiction").map((book) => (
-                  <div className="flex flex-col items-center justify-between 
-        shrink-0 w-64 m-2 shadow-md shadow-slate-400 shadow-gray
-          rounded-2xl " key={book.id}>
+                  <div className="flex flex-col items-center 
+                  justify-between shrink-0 w-64 m-2 shadow-md 
+                  shadow-slate-400 shadow-gray
+                  rounded-2xl " key={book.id}>
 
                     <div className="flex flex-col rounded-2xl">
                       <img src={loginImg} alt="#" className="rounded-2xl" />
@@ -92,7 +121,7 @@ function Home() {
                         <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
+                      <div className="bg-blue-500 hover:bg-blue-500 p-2 px-3 rounded-xl mb-2">
                         <p className="font-semibold text-normal text-center text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
                           More Information
@@ -112,9 +141,10 @@ function Home() {
             <div className="flex overflow-x-scroll justify-around m-1">
               {
                 items.filter((books) => books.bookCategory == "Travel").map((book) => (
-                  <div className="flex flex-col items-center justify-between 
-        shrink-0 w-64 m-2 shadow-md shadow-slate-400 shadow-gray
-          rounded-2xl " key={book.id}>
+                  <div className="flex flex-col items-center 
+                  justify-between 
+                  shrink-0 w-64 m-2 shadow-md shadow-slate-400 
+                  shadow-gray rounded-2xl " key={book.id}>
 
                     <div className="flex flex-col rounded-2xl">
                       <img src={loginImg} alt="#" className="rounded-2xl" />
@@ -124,12 +154,16 @@ function Home() {
                     </div>
 
                     <div className="flex flex-col justify-around items-center h-full rounded-xl" >
-                      <div className="flex justify-center w-3/5 rounded-xl  bg-green-300">
+                      <div className="flex justify-center w-3/5 rounded-xl 
+                      bg-green-300">
                         <img src={priceTag} alt="" className="w-6 h-6" />
-                        <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
+                        <p className="font-normal text-lg text-slate-800">
+                          {book.bookPrice} $
+                        </p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
+                      <div className="bg-blue-500 hover:bg-blue-500 p-2 
+                      px-3 rounded-xl mb-2">
                         <p className="font-semibold text-normal text-center text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
                           More Information
@@ -149,9 +183,11 @@ function Home() {
             <div className="flex overflow-x-scroll justify-around m-1">
               {
                 items.filter((books) => books.bookCategory == "Science").map((book) => (
-                  <div className="flex flex-col items-center justify-between 
-        shrink-0 w-64 m-2 shadow-md shadow-slate-400 shadow-gray
-          rounded-2xl " key={book.id}>
+                  <div className="flex flex-col 
+                  items-center justify-between 
+                  shrink-0 w-64 m-2 shadow-md 
+                  shadow-slate-400 shadow-gray
+                  rounded-2xl " key={book.id}>
 
                     <div className="flex flex-col rounded-2xl">
                       <img src={loginImg} alt="#" className="rounded-2xl" />
@@ -161,13 +197,18 @@ function Home() {
                     </div>
 
                     <div className="flex flex-col justify-around items-center h-full rounded-xl" >
-                      <div className="flex justify-center w-3/5 rounded-xl  bg-green-300">
+                      <div className="flex justify-center w-3/5 rounded-xl  
+                      bg-green-300">
                         <img src={priceTag} alt="" className="w-6 h-6" />
-                        <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
+                        <p className="font-normal text-lg text-slate-800">
+                          {book.bookPrice} $
+                        </p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
-                        <p className="font-semibold text-normal text-center text-white cursor-pointer"
+                      <div className="bg-blue-500 hover:bg-blue-500 p-2 
+                      px-3 rounded-xl mb-2">
+                        <p className="font-semibold text-normal 
+                        text-center text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
                           More Information
                         </p>
@@ -186,9 +227,10 @@ function Home() {
             <div className="flex overflow-x-scroll justify-around m-1">
               {
                 items.filter((books) => books.bookCategory == "Music").map((book) => (
-                  <div className="flex flex-col items-center justify-between 
-        shrink-0 w-64 m-2 shadow-md shadow-slate-400 shadow-gray
-          rounded-2xl " key={book.id}>
+                  <div className="flex flex-col items-center 
+                  justify-between shrink-0 w-64 m-2 shadow-md 
+                  shadow-slate-400 shadow-gray
+                  rounded-2xl " key={book.id}>
 
                     <div className="flex flex-col rounded-2xl">
                       <img src={loginImg} alt="#" className="rounded-2xl" />
@@ -198,13 +240,18 @@ function Home() {
                     </div>
 
                     <div className="flex flex-col justify-around items-center h-full rounded-xl" >
-                      <div className="flex justify-center w-3/5 rounded-xl  bg-green-300">
+                      <div className="flex justify-center w-3/5 rounded-xl  
+                      bg-green-300">
                         <img src={priceTag} alt="" className="w-6 h-6" />
-                        <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
+                        <p className="font-normal text-lg text-slate-800">
+                          {book.bookPrice} $
+                        </p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
-                        <p className="font-semibold text-normal text-center text-white cursor-pointer"
+                      <div className="bg-blue-500 hover:bg-blue-500 
+                      p-2 px-3 rounded-xl mb-2">
+                        <p className="font-semibold text-normal text-center
+                        text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
                           More Information
                         </p>
@@ -235,12 +282,14 @@ function Home() {
                     </div>
 
                     <div className="flex flex-col justify-around items-center h-full rounded-xl" >
-                      <div className="flex justify-center w-3/5 rounded-xl  bg-green-300">
+                      <div className="flex justify-center w-3/5 rounded-xl bg-green-300">
                         <img src={priceTag} alt="" className="w-6 h-6" />
-                        <p className="font-normal text-lg text-slate-800">{book.bookPrice} $</p>
+                        <p className="font-normal text-lg text-slate-800">
+                          {book.bookPrice} $
+                        </p>
                       </div>
 
-                      <div className="bg-blue-600 hover:bg-blue-500 p-2 px-3 rounded-xl">
+                      <div className="bg-blue-500 hover:bg-blue-500 p-2 px-3 rounded-xl mb-2">
                         <p className="font-semibold text-normal text-center 
                         text-white cursor-pointer"
                           onClick={() => { handleBookInfoClick(book) }}>
@@ -256,8 +305,7 @@ function Home() {
             </div>
 
           </div>
-          : items.filter((book) => book.bookTitle.includes(itemSearchBar.trim()
-          )).map((filteredBook) => (
+          : items.filter((book) => book.bookTitle.includes(itemSearchBar.trim())).map((filteredBook) => (
             <div
               className="flex flex-col items-center justify-between 
                   shrink-0 w-62 m-4 shadow-md shadow-slate-400 shadow-gray
@@ -278,7 +326,7 @@ function Home() {
                   <p className="font-normal text-lg text-slate-800">{filteredBook.bookPrice} $</p>
                 </div>
 
-                <div className="bg-blue-600 hover:bg-blue-500 p-2 m-2 px-3 rounded-xl">
+                <div className="bg-blue-500 hover:bg-blue-500 p-2 m-2 px-3 rounded-xl">
                   <p className="font-semibold text-normal text-center text-white cursor-pointer"
                     onClick={() => { handleBookInfoClick(filteredBook) }}>
                     More Information

@@ -18,20 +18,26 @@ import upcCode from "../assets/upcCode.png"
 
 function BookInfo() {
   const navigate = useNavigate();
-  //book, setBook
-  const { book } = useContext(Context);
-  const { setBookCart } = useContext(Context)
-
-  const [added, setAdded] = useState(false)
-  const [whishList, setWishList] = useState(false)
+  
+  const { book, setCart, cart } = useContext(Context);
+  const [added, setAdded] = useState(false);
+  const [whishList, setWishList] = useState(false);
 
   const handleAddCart = () => {
-    setBookCart(book)
+    setCart((prevItem) => {
+
+      if (prevItem.some((item) =>  item.id === book.id)) {
+        return prevItem;
+      }
+      return [...prevItem, book];
+    })
+
     setAdded(true)
+
     setTimeout(() => {
       setAdded(false)
     }, 2500);
-  }
+  };
 
   const handleAddWishList = () => {
     setWishList(true)

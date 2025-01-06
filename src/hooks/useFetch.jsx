@@ -3,8 +3,8 @@ import { data } from "react-router-dom"
 
 export const useFetch = (url) => {
 
-  const [items, setItems] = useState([])
-
+  const [items, setItems] = useState([]);
+  
   const fetchItems = async () => {
 
     try {
@@ -17,7 +17,6 @@ export const useFetch = (url) => {
 
       const json = await resp.json();
       setItems(json);
-      console.log(json)
 
     } catch (error) {
       console.log("There was an error when fetching the data")

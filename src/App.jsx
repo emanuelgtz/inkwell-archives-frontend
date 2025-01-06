@@ -22,6 +22,7 @@ function App() {
           <Route path="/login/user-info" exact element={<UserInfo />} />
           <Route path="/login/cart" exact element={<Cart />} />
           <Route path="/login/purchase-history" exact element={<PurchaseHistory />} />
+          
         </Route>
 
         {/* Public routes */}
